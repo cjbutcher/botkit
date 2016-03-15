@@ -10,8 +10,8 @@ exports.get = function(bot, message, endpoint) {
 	  if (response.statusCode === 401) {
 	  	bot.startPrivateConversation(message, function(err,convo) {
 		    convo.ask("Hey! :simple_smile: It looks like you are trying to talk to me, but I can't be sure who you are yet. What is your Charliebot password?", function(message, convo) {
-		    	authenticate(bot, message);
-		    	convo.next();
+		    	authenticate(bot, message, convo);
+		    	convo.stop();
 		    });
 		  });
 	    return
@@ -69,9 +69,7 @@ function authenticate(bot, message) {
     										"&charliebot_password=" + message.text
 
     request.post(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        console.log(body)
-      }
+			bot.reply(message, formatText(body));
     });
   });
 }
