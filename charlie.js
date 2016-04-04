@@ -52,7 +52,7 @@ exports.bookSickDay = function(bot, message, endpoint) {
 }
 
 function compileUrl(slack_user_id, endpoint) {
-	return 'http://charlie.dev/api/v1/' + slack_user_id + '/' + endpoint + '?' + 	'access_token=' + accessToken
+	return 'https://www.charlie.com/api/v1/' + slack_user_id + '/' + endpoint + '?' + 	'access_token=' + accessToken
 }
 
 function formatText(body) {
@@ -61,8 +61,8 @@ function formatText(body) {
 
 function authenticate(bot, message) {
   bot.api.users.info({ 'user' : message.user }, function(err, res) {
-    //email = res.user.profile.email
-    email = 'chris@theeleven.co.uk'
+    email = res.user.profile.email
+    //email = 'chris@theeleven.co.uk'
 
     var url = compileUrl(message.user, 'authenticate') +
     										"&email=" + email + 
